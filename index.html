@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campanha Solidária</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f7f3ee;color:#342b27;font-family:Arial,sans-serif;line-height:1.6}
+header{background:white;padding:18px;text-align:center;color:#754832;font-weight:bold;font-size:20px}
+main{max-width:600px;margin:auto;padding:20px 14px}
+.hero{background:#dfcdbd;padding:30px 20px;border-radius:16px;text-align:center}
+h1{font-size:30px;line-height:1.2}
+.card{background:white;padding:22px;border-radius:15px;margin-top:18px}
+.meta{font-size:34px;font-weight:bold;margin:5px 0}
+.muted{color:#766b64}
+.track{height:10px;background:#eee5dd;border-radius:10px;overflow:hidden}
+.progress{height:100%;width:0;background:#89563f}
+.valores{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:15px 0}
+button{padding:13px;border:1px solid #ddcec3;background:white;border-radius:9px;font-size:16px;font-weight:bold}
+button.sel{background:#f0e1d6;border:2px solid #89563f}
+input{width:100%;padding:13px;border:1px solid #ddcec3;border-radius:9px;font-size:16px}
+.principal{width:100%;background:#89563f;color:white;border:0;margin-top:15px}
+small{color:#766b64}
+</style>
+</head>
+<body>
+<header>♡ Campanha Solidária</header>
+<main>
+<section class="hero">
+<div style="font-size:42px">♡</div>
+<p>UMA CORRENTE DE SOLIDARIEDADE</p>
+<h1>Juntos por uma nova esperança</h1>
+<p>Cada contribuição pode fazer a diferença. Ajude a transformar uma vida!</p>
+</section>
+<section class="card">
+<p class="muted">NOSSA META</p>
+<div class="meta">R$ 50.000,00</div>
+<p>Arrecadado: R$ 0,00</p>
+<div class="track"><div class="progress"></div></div>
+<small>Meta inicial da campanha</small>
+</section>
+<section class="card">
+<h2>Faça sua doação ❤️</h2>
+<p>Escolha o valor da sua contribuição:</p>
+<div class="valores">
+<button class="sel" data-v="20">R$ 20</button>
+<button data-v="50">R$ 50</button>
+<button data-v="100">R$ 100</button>
+<button data-v="200">R$ 200</button>
+</div>
+<label for="outro">Outro valor (R$)</label>
+<input id="outro" type="number" min="1" placeholder="Digite o valor">
+<button class="principal" id="doar">Quero ajudar via Pix</button>
+<p id="aviso" class="muted" role="status">Demonstração: pagamentos ainda não configurados.</p>
+</section>
+<section class="card">
+<h2>Nossa história</h2>
+<p>Em breve, você conhecerá aqui a história da pessoa ou família beneficiada e como as doações serão utilizadas.</p>
+</section>
+<section class="card">
+<h2>Transparência</h2>
+<p>Esta campanha terá informações sobre a utilização dos recursos e atualizações da arrecadação.</p>
+</section>
+</main>
+<script>
+let valor=20;
+const botoes=document.querySelectorAll("[data-v]");
+botoes.forEach(b=>b.onclick=()=>{
+valor=Number(b.dataset.v);
+document.getElementById("outro").value="";
+botoes.forEach(x=>x.classList.remove("sel"));
+b.classList.add("sel");
+});
+document.getElementById("outro").oninput=()=>{
+botoes.forEach(x=>x.classList.remove("sel"));
+};
+document.getElementById("doar").onclick=()=>{
+const campo=document.getElementById("outro");
+const v=campo.value.trim()!==""?Number(campo.value):valor;
+const aviso=document.getElementById("aviso");
+if(!Number.isFinite(v)||v<1||v>50000){
+aviso.textContent="Digite um valor entre R$ 1 e R$ 50.000.";
+return;
+}
+aviso.textContent="Você escolheu R$ "+v.toLocaleString("pt-BR",{minimumFractionDigits:2})+". O pagamento Pix será habilitado após a integração com um provedor.";
+};
+</script>
+</body>
+</html>
